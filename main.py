@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
+GUILD_NUM = os.getenv("GUILD_ID")
 
 # these are like the default intents for discord 
 # assign all intents before creating the bot with the client
@@ -21,9 +22,9 @@ class Client(commands.Bot): # used to be discord.Client
     async def on_ready(self):
         print(f'Logged on as {self.user}!')
         try: 
-            guild =  discord.Object(id = 1069104601724375140)
+            guild =  discord.Object(id = GUILD_NUM)
             synced = await self.tree.sync(guild = guild)
-            print(f'Synced {len(synced)} commands to guild {guild.id}')
+            print(f'Synced {len(synced)} commands to guild')
 
         except Exception as e:
             print(f'Error syncing commands: {e}')
@@ -115,7 +116,7 @@ client = Client(command_prefix="!", intents=intents)
 # client = Client(intents=intents)
 
 # specify server when doing slash commands or else it takes forever#
-GUILD_ID = discord.Object(id = 1069104601724375140)
+GUILD_ID = discord.Object(id = GUILD_NUM)
 
 # create a slash command / name cannot be capitalized
 @client.tree.command(name="hellooo", description="Say hello!", guild = GUILD_ID)
